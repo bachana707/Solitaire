@@ -1527,6 +1527,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainDeck: {fileID: 2096593802}
+  tableaus:
+  - {fileID: 821996454}
+  - {fileID: 1167697132}
+  - {fileID: 894700319}
+  - {fileID: 1349835995}
 --- !u!4 &2052172438
 Transform:
   m_ObjectHideFlags: 0
