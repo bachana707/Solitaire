@@ -1,22 +1,18 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Foundation : MonoBehaviour
-{
+public class Foundation : MonoBehaviour {
   public CardData.Suit foundationSuit;
   public List<Card> cardsInPile = new List<Card>();
 
-  public bool IsMoveValid(Card card)
-  {
+  public bool IsMoveValid(Card card) {
     // Check for the correct suit
-    if (card.cardData.cardSuit != foundationSuit) 
-    {
+    if (card.cardData.cardSuit != foundationSuit) {
       return false;
     }
 
     // If pile is empty, only Ace can be placed
-    if (cardsInPile.Count == 0)
-    {
+    if (cardsInPile.Count == 0) {
       return card.cardData.cardRank == CardData.Rank.Ace;
     }
 

@@ -18,12 +18,13 @@ public class SolitaireManager : MonoBehaviour {
     // Update game state
   }
 
-  public bool CheckIfCardCanBePlacedInAnyTableau(Card card) {  //Use this function when user just clicks on the card
+  public bool CheckIfCardCanBePlacedInAnyTableau(Card card) { //Use this function when user just clicks on the card
     foreach (var tableau in tableaus) {
       if (tableau.IsMoveValid(card)) {
         return true;
       }
     }
+
     return false;
   }
 

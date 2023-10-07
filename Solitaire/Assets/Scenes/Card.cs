@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class Card : MonoBehaviour
-{
+public class Card : MonoBehaviour {
   public Tableau currentTableau;
   public CardData cardData;
   public bool isFaceUp = false;
@@ -11,85 +10,70 @@ public class Card : MonoBehaviour
   private Vector3 offset;
   private Vector3 initialPosition;
   private Card _otherCard;
-  private void Awake()
-  {
+
+  private void Awake() {
     meshRenderer = GetComponent<MeshRenderer>();
   }
 
   // Function to update card visuals
 
-  void Update()
-  {
-    if (isDragging)
-    {
+  void Update() {
+    if (isDragging) {
       Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
       RaycastHit hit;
-      if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-      {
+      if (Physics.Raycast(ray, out hit, Mathf.Infinity)) {
         transform.position = hit.point + offset;
       }
     }
   }
 
-  void OnMouseDown()
-  {
+  void OnMouseDown() {
     isDragging = true;
     initialPosition = transform.position;
     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
     RaycastHit hit;
-    if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-    {
+    if (Physics.Raycast(ray, out hit, Mathf.Infinity)) {
       offset = transform.position - hit.point;
     }
   }
 
-  void OnMouseUp()
-  {
+  void OnMouseUp() {
     isDragging = false;
     // Check collision or placement logic here...
-    if (_otherCard!=null)
-    {
+    if (_otherCard != null) {
       Debug.Log("Other Card not null");
-      if (_otherCard.currentTableau.IsMoveValid(this))
-      {
+      if (_otherCard.currentTableau.IsMoveValid(this)) {
         Debug.Log("Valid Move");
-        _otherCard.currentTableau.AddCard(this);  //ToDo remove this card from the previous tableau
+        _otherCard.currentTableau.AddCard(this); //ToDo remove this card from the previous tableau
         _otherCard = null;
-      }
-      else
-      {
+      } else {
         MoveBackToInitialPosition();
       }
-    }
-    else
-    {
+    } else {
       MoveBackToInitialPosition();
     }
   }
-  private void OnCollisionEnter(Collision collision)
-  {
+
+  private void OnCollisionEnter(Collision collision) {
     if (collision.gameObject.CompareTag("Card")) {
       _otherCard = collision.gameObject.GetComponent<Card>();
     }
   }
-  void MoveBackToInitialPosition()
-  {
+
+  void MoveBackToInitialPosition() {
     transform.position = initialPosition;
   }
+
   // Flip the card
-  public void Flip()
-  {
+  public void Flip() {
     isFaceUp = !isFaceUp;
     UpdateCardVisual();
   }
-  public void UpdateCardVisual()
-  {
-    if (isFaceUp)
-    {
+
+  public void UpdateCardVisual() {
+    if (isFaceUp) {
       meshRenderer.material = cardData.cardMaterial;
-    }
-    else
-    {
+    } else {
       // Display the back of the card or a default image
       // spriteRenderer.sprite = backOfCardImage;
     }
